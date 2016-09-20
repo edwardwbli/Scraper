@@ -55,10 +55,14 @@ class Jobsearch(scrapy.Spider):
     def parse_job(self, response):
    
         item = response.meta['item']
-        content = []
+        content = [] 
+        '''
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]/text()').extract():
             content.append(text.strip())
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]/p/text()').extract():
             content.append(text.strip())
+        '''
+        for text in response.xpath('//div[@class="bmsg job_msg inbox"]//text()').extract():
+                        content.append(text.strip())   
         item['jobcont'] = ''.join(content).strip()
         return item

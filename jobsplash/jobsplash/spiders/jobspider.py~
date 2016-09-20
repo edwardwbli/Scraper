@@ -57,9 +57,11 @@ class Jobsearch(scrapy.Spider):
     def parse_job(self, response):
    
         item = response.meta['item']
-
+<<<<<<< Updated upstream
         content = [] 
-
+=======
+        content = []
+>>>>>>> Stashed changes
         '''
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]/text()').extract():
             content.append(text.strip())
@@ -67,7 +69,10 @@ class Jobsearch(scrapy.Spider):
             content.append(text.strip())
         '''
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]//text()').extract():
+<<<<<<< Updated upstream
+                        content.append(text.strip())   
+=======
             content.append(text.strip())
-
+>>>>>>> Stashed changes
         item['jobcont'] = ''.join(content).strip()
         return item

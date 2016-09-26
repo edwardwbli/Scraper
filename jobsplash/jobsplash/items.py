@@ -10,6 +10,7 @@ import scrapy
 
 class Job51SearchItem(scrapy.Item):
     # define the fields for your item here like:
+    jobid = scrapy.Field()
     jobname = scrapy.Field()
     company = scrapy.Field()
     salary = scrapy.Field()

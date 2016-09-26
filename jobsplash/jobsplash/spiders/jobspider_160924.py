@@ -10,7 +10,7 @@ from jobsplash.items import Job51SearchItem
 
 
 class Jobsearch(scrapy.Spider):
-    name = "51job"
+    name = "51job_bk"
     allowed_domains = ["51job.com"]
 
     
@@ -19,9 +19,13 @@ class Jobsearch(scrapy.Spider):
     #def start_request(self):
     #    for link in self.start_urls:
     #        yield SplashRequest(link,callback=sel.parse)
-    def __init__(self,qk='python'):
-        self.start_urls = ["http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea=030200%2C00&funtype=0000&industrytype=00&keyword=" + qk]
-    
+    def __init__(self,qk='python',ja='030200'):
+
+        self.start_urls = ["http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea="+ja+"%2C00&funtype=0000&industrytype=00&keyword=" + qk]
+        '''
+        self.start_urls = ["http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea="+ja+"%2C00&funtype=0000&industrytype=00&keyword="+qk+"&keywordtype=1&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9"]
+        '''
+   
     def parse(self, response):
         
         joblist =  response.xpath('//div[@class="dw_table"]/div[@class="el"]')
@@ -57,11 +61,9 @@ class Jobsearch(scrapy.Spider):
     def parse_job(self, response):
    
         item = response.meta['item']
-<<<<<<< Updated upstream
+
         content = [] 
-=======
-        content = []
->>>>>>> Stashed changes
+
         '''
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]/text()').extract():
             content.append(text.strip())
@@ -69,10 +71,7 @@ class Jobsearch(scrapy.Spider):
             content.append(text.strip())
         '''
         for text in response.xpath('//div[@class="bmsg job_msg inbox"]//text()').extract():
-<<<<<<< Updated upstream
-                        content.append(text.strip())   
-=======
             content.append(text.strip())
->>>>>>> Stashed changes
+
         item['jobcont'] = ''.join(content).strip()
         return item

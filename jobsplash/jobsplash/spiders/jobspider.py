@@ -19,13 +19,12 @@ class Jobsearch(scrapy.Spider):
     #    for link in self.start_urls:
     #        yield SplashRequest(link,callback=sel.parse)
     def __init__(self,qk='python',ja='030200',kwt='2'):
-
+        self.item_count = 1 
         self.start_urls = ["http://search.51job.com/jobsearch/search_result.php?fromJs=1&jobarea="+ja+"&funtype=0000&industrytype=00&keyword="+qk+"&keywordtype="+kwt+"&lang=c&stype=2&postchannel=0000&fromType=1&confirmdate=9"]
        
    
     def parse(self, response):
-        item_count = 0
-
+      
         joblist =  response.xpath('//div[@class="dw_table"]/div[@class="el"]')
         for jobitem in joblist:
             #must create multiple items corresponding to every new scrapy request
@@ -34,9 +33,9 @@ class Jobsearch(scrapy.Spider):
             #yield to be a generator with same item reference,
             #
             item = Job51SearchItem()
-            jobid = item_count
+            jobid = self.item_count
             item['jobid'] = jobid
-            item_count += 1
+            self.item_count += 1
             
             jobnames  = jobitem.xpath('p/span/a/@title').extract()
             companys  = jobitem.xpath('span[@class="t2"]/a/text()').extract()

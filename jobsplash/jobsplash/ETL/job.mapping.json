@@ -1,0 +1,24 @@
+{
+	"dynamic": "true",
+ 	"properties" : {
+        "jobid" : {
+          "type" :    "integer"
+	  	},
+        "jobname" : {
+          "type" :  "string"
+        },
+		"salary": {
+		  "type" : "string",
+		  "index" : "not_analyzed"
+		},
+        "company" : {
+          "type" :   "string",
+		  "index" : "not_analyzed"
+        },
+        "jobcont" : {
+          "type" :   "long"
+        }
+      }
+    }
+  }
+}
